@@ -1,58 +1,35 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
-
-import createHistory from 'history/createBrowserHistory'
+import createHistory from 'history/createHashHistory'
 import { Route } from 'react-router'
-
 import { ConnectedRouter, routerReducer, routerMiddleware, push } from 'react-router-redux'
+import CreateSagaMiddleware from 'redux-saga'
 
-import reducers from './reducers' // Or wherever you keep your reducers
 
-// Create a history of your choosing (we're using a browser history in this case)
+import reducers from './reducers'
+import sagas from './sagas'
+import Home from './containers/Home.js'
+import Waterfall from './containers/Waterfall/Waterfall.js'
+
 const history = createHistory()
-
-// Build the middleware for intercepting and dispatching navigation actions
-const middleware = routerMiddleware(history)
-
-// Add the reducer to your store on the `router` key
-// Also apply our middleware for navigating
+const RouterMiddleware = routerMiddleware(history)
+const SagaMiddleware = CreateSagaMiddleware(sagas)
 const store = createStore(
   combineReducers({
     ...reducers,
     router: routerReducer
   }),
-  applyMiddleware(middleware)
+  applyMiddleware(RouterMiddleware, SagaMiddleware)
 )
-
-const Home = ()=>{
-  return (
-    <h3>Home</h3>
-  )
-}
-const About = ()=>{
-  return (
-    <h3>About</h3>
-  )
-}
-const Topics = ()=>{
-  return (
-    <h3>Topics</h3>
-  )
-}
-// Now you can dispatch navigation actions from anywhere!
-// store.dispatch(push('/foo'))
 
 ReactDOM.render(
   <Provider store={store}>
-    { /* ConnectedRouter will use the store from Provider automatically */ }
     <ConnectedRouter history={history}>
       <div id="demoPage">
         <Route exact path="/" component={Home}/>
-        <Route path="/about" component={About}/>
-        <Route path="/topics" component={Topics}/>
+        <Route path='/waterfall' component={Waterfall}/>
       </div>
     </ConnectedRouter>
   </Provider>,

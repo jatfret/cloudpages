@@ -63,6 +63,9 @@ app.get('/:appName', function(req, res, next) {
       res.end();
   });
 });
+app.get('/api/cards', functions(req, res){
+  res.sendFile('../src/demo/constants/cards.json')
+})
 
 const staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory)
 app.use(staticPath, express.static('./static'))
