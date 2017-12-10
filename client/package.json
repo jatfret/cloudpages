@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "dev": "webpack-dev-server --config ./config/webpack.config.js"
+    "dev": "webpack-dev-server --config ./config/webpack.config.js",
+    "build": "webpack --config ./config/webpack.config.js"
   },
   "dependencies": {
     "history": "^4.7.2",
@@ -50,6 +51,7 @@
     "vue-template-compiler": "^2.5.9",
     "webpack": "^3.9.1",
     "webpack-dev-middleware": "^1.12.2",
-    "webpack-dev-server": "^2.9.5"
+    "webpack-dev-server": "^2.9.5",
+    "webpack-merge": "^4.1.1"
   }
 }

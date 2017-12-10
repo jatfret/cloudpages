@@ -9,9 +9,11 @@ module.exports = {
     browser: true,
     es6: true
   },
-  ecmaFeatures: {
-    jsx: true,
-    module: true
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+      module: true
+    },
   },
   rules: {
     'react/jsx-uses-react': 2,
